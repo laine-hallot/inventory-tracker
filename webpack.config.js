@@ -36,7 +36,7 @@ module.exports = [
     devServer: {
       hot: true,
       port: 8080,
-      watchFiles: ['src/app/**/*.*'],
+      watchFiles: ['src/**/*.*'],
     },
     module: {
       rules: [
@@ -51,7 +51,7 @@ module.exports = [
         },
         {
           test: /\.css$/i,
-          include: path.resolve(__dirname, 'src'),
+          include: path.resolve(__dirname, 'src/app'),
           use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
       ],

@@ -1,16 +1,20 @@
 // src/electron.js
 const { app, BrowserWindow } = require('electron');
+const reloader = require('electron-reloader');
 
-try {
+/* try {
   console.log('__dirname');
-  require('electron-reloader')(__dirname, {
+  console.log(typeof __dirname);
+  reloader(__dirname, {
     ignore: ['./src/app'],
     watchRenderer: false,
     debug: true,
   });
 } catch (error) {
+  console.log('FLAG 1');
   console.log(error);
-}
+  console.log('FLAG 2');
+} */
 
 function createWindow() {
   // Create the browser window.
