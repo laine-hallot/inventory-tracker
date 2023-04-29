@@ -31,7 +31,7 @@ module.exports = [
     // watch: true,
     mode: 'development',
     entry: './src/app/app.tsx',
-    target: 'electron-renderer',
+    //target: 'electron-renderer',
     devtool: 'source-map',
     devServer: {
       hot: true,
@@ -43,26 +43,25 @@ module.exports = [
         {
           test: /\.ts(x?)$/,
           include: /src/,
-          use: [
-            { loader: 'ts-loader' },
-            // { loader: 'electron-reloader' },
-            //{ loader: 'react-hot-loader/webpack' },
-          ],
+          use: [{ loader: 'ts-loader' }],
         },
         {
           test: /\.css$/i,
-          include: path.resolve(__dirname, 'src/app'),
+          include: path.resolve(__dirname, 'src/app/'),
           use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
       ],
     },
+    resolve: { extensions: ['.ts', '.tsx', '.js'] },
     output: {
-      path: __dirname + '/dist',
+      path: __dirname + '/dist/web',
+      asyncChunks: true,
+      globalObject: 'globalThis',
       filename: 'react.js',
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/index.html',
+        template: './src/app/index.html',
       }),
     ],
   },

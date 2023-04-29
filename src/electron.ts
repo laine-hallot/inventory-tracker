@@ -1,6 +1,7 @@
 // src/electron.js
 const { app, BrowserWindow } = require('electron');
 const reloader = require('electron-reloader');
+const path = require('path');
 
 /* try {
   console.log('__dirname');
