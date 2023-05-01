@@ -1,0 +1,9 @@
+.text-normal {
+  @apply text-sm text-gray-800 dark:text-white;
+  font-family: 'Lato', sans-serif;
+}
+
+.text-title {
+  @apply text-4xl leading-10 font-bold;
+  font-family: 'Comme', sans-serif;
+}

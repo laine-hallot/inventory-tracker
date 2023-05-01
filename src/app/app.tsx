@@ -2,6 +2,8 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Router } from './src/router/router';
 import './style.css';
+import './assets/forms.css';
+import './assets/text.css';
 import { routes } from './routes';
 import { MainUI } from './src/ui/main-ui';
 
