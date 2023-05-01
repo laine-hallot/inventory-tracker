@@ -1,23 +1,20 @@
-import {
+import type { FC, PropsWithChildren } from 'react';
+import React, {
   createContext,
-  FC,
-  PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
-  useMemo,
   useState,
+  useMemo,
 } from 'react';
-import React from 'react';
 
-import { ConfigRoutes, Routes } from './types';
+import { ConfigRoutes, RouterContext, Routes } from './types';
 import { MainUI } from '../ui/main-ui';
 
-interface RouterProps {
-  leftNavOpen?: boolean;
-  routes: ConfigRoutes;
-}
-
-const NavContext = createContext(null);
+export const NavContext = createContext<{
+  routerContextData: RouterContext;
+  setRouterContextData: (value: React.SetStateAction<RouterContext>) => void;
+}>(null);
 
 const initializeRoutes = (
   routes: ConfigRoutes
@@ -37,26 +34,56 @@ const initializeRoutes = (
   };
 };
 
-export const Router: FC<PropsWithChildren<RouterProps>> = ({
-  children,
-  routes,
-}) => {
-  const routesContextData = useMemo(() => {
-    return initializeRoutes(routes);
+const useNavigatorRoot = (routes) => {
+  const [routerContextData, setRouterContextData] = useState<RouterContext>({
+    activeRoute: '',
+    routes: [],
+  });
+
+  useEffect(() => {
+    setRouterContextData(initializeRoutes(routes));
   }, [routes]);
-  const [activePath, setActivePath] = useState(routesContextData.activeRoute);
-  const [isLeftNavOpen, setIsLeftNavOpen] = useState();
+
+  return { routerContextData, setRouterContextData };
+};
+
+export const useNavigator = () => {
+  const { routerContextData, setRouterContextData } = useContext(NavContext);
+
+  const updatePage = useCallback(
+    (path) => {
+      setRouterContextData({
+        ...routerContextData,
+        activeRoute: path,
+      });
+    },
+    [routerContextData, setRouterContextData]
+  );
+
+  return { updatePage };
+};
+
+interface RouterProps {
+  leftNavOpen?: boolean;
+  routes: ConfigRoutes;
+  layout: React.FC<PropsWithChildren>;
+}
+
+export const Router: FC<RouterProps> = ({ layout: Layout, routes }) => {
+  const { routerContextData, setRouterContextData } = useNavigatorRoot(routes);
 
   const ActivePageComponent = useMemo(() => {
-    console.log(activePath);
-    return routesContextData.routes.find((route) => route.path === activePath)
-      ?.component;
-  }, [routesContextData]);
+    return routerContextData.routes.find(
+      (route) => route.path === routerContextData.activeRoute
+    )?.component;
+  }, [routerContextData.activeRoute]);
 
   return (
     <>
-      <NavContext.Provider value={routesContextData}>
-        <MainUI>{activePath && <ActivePageComponent />}</MainUI>
+      <NavContext.Provider value={{ routerContextData, setRouterContextData }}>
+        <Layout>
+          {routerContextData.activeRoute && <ActivePageComponent />}
+        </Layout>
       </NavContext.Provider>
     </>
   );

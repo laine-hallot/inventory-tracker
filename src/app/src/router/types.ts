@@ -12,3 +12,8 @@ export interface Route extends ConfigRoute {
 export type ConfigRoutes = ConfigRoute[];
 
 export type Routes = Route[];
+
+export interface RouterContext {
+  activeRoute: string;
+  routes: Routes;
+}

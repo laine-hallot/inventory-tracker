@@ -1,5 +1,6 @@
 import React from 'react';
 import type { FC, PropsWithChildren } from 'react';
+import { NavItem } from './nav-item';
 
 interface LeftNavProps {
   navOptions: { name: string; path: string }[];
@@ -10,11 +11,9 @@ export const LeftNav: FC<PropsWithChildren<LeftNavProps>> = ({
   navOptions,
 }) => {
   return (
-    <div className="w-64 px-6 py-8 border-r border-r-slate-300">
-      {navOptions.map((option) => (
-        <div>
-          <span className="text-sm">{option.name}</span>
-        </div>
+    <div className="w-64 px-6 py-8 border-r border-r-slate-300 flex flex-col">
+      {navOptions.map((option, index) => (
+        <NavItem key={index} name={option.name} path={option.path} />
       ))}
     </div>
   );

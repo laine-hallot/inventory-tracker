@@ -18,16 +18,16 @@ const TopLevelRoutes = [
     path: '/entities',
   },
   {
-    name: 'Inventory',
-    path: '/inventory',
+    name: 'Items',
+    path: '/items',
   },
 ];
 
 export const MainUI: FC<PropsWithChildren<MainUIProps>> = ({ children }) => {
   return (
-    <div className="flex min-w-screen min-h-screen">
+    <div className="flex min-w-screen min-h-screen dark:bg-zinc-700">
       <LeftNav navOptions={TopLevelRoutes} />
-      <div className="screen-container">{children}</div>
+      <div className="screen-container flex-1">{children}</div>
     </div>
   );
 };
