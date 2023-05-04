@@ -1,8 +1,6 @@
 import { FC, useCallback } from 'react';
 import React, { useState, useRef } from 'react';
 
-import { LocalStorage } from '../../../../web-local-storage/storage';
-
 interface NewEntityInputProps {
   handleSave: (data: { name: string }) => void;
 }

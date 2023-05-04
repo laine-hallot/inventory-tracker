@@ -6,6 +6,12 @@ import './assets/forms.css';
 import './assets/text.css';
 import { routes } from './routes';
 import { MainUI } from './src/ui/main-ui';
+import { initInventoryTracker } from './init';
+import { LocalStorage } from '../web-local-storage/storage';
+
+initInventoryTracker({
+  storage: LocalStorage,
+});
 
 const root = createRoot(document.getElementById('app'));
 root.render(<Router routes={routes} layout={MainUI} />);
