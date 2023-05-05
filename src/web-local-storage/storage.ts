@@ -66,4 +66,9 @@ export class LocalStorage {
 
     this.addToRootData(entityUuid);
   }
+
+  deleteEntity(id: string): void {
+    localStorage.removeItem(id);
+    this.removeFromRootData(id);
+  }
 }

@@ -30,7 +30,7 @@ module.exports = [
   {
     // watch: true,
     mode: 'development',
-    entry: './src/app/app.tsx',
+    entry: './src/frontend/app.tsx',
     //target: 'electron-renderer',
     devtool: 'source-map',
     devServer: {
@@ -47,7 +47,7 @@ module.exports = [
         },
         {
           test: /\.css$/i,
-          include: path.resolve(__dirname, 'src/app/'),
+          include: path.resolve(__dirname, 'src/frontend/'),
           use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
       ],
@@ -61,7 +61,7 @@ module.exports = [
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './src/app/index.html',
+        template: './src/frontend/index.html',
       }),
     ],
   },

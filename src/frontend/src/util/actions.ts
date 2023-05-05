@@ -8,3 +8,7 @@ export const getEntities = (): InventoryEntity => {
 export const saveEntity = (data): void => {
   AppSetup.default.StorageAdapter.addEntity(data);
 };
+
+export const deleteEntity = (id: string): void => {
+  AppSetup.default.StorageAdapter.deleteEntity(id);
+};
