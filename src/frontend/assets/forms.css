@@ -1,5 +1,5 @@
 .text-input {
-  @apply py-1 px-4 bg-white dark:bg-zinc-900  text-gray-900 dark:text-white placeholder:text-gray-400 rounded outline-none;
+  @apply py-1 px-4 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white placeholder:text-gray-400 rounded outline-none;
 }
 
 .btn {
@@ -8,4 +8,12 @@
 
 .btn.btn-confirm {
   @apply bg-green-600;
+}
+
+.dropdown {
+  @apply py-1 px-4 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white placeholder:text-gray-400 rounded outline-none;
+}
+
+.dropdown > option {
+  @apply text-white;
 }

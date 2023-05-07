@@ -11,7 +11,7 @@ export const LeftNav: FC<PropsWithChildren<LeftNavProps>> = ({
   navOptions,
 }) => {
   return (
-    <div className="w-64 px-6 py-8 border-r border-r-slate-300 flex flex-col">
+    <div className="w-64 px-6 py-8 flex flex-col bg-slate-200 dark:bg-zinc-800">
       {navOptions.map((option, index) => (
         <NavItem key={index} name={option.name} path={option.path} />
       ))}

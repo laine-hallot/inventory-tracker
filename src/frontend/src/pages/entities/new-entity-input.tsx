@@ -1,5 +1,5 @@
-import { FC, useCallback } from 'react';
-import React, { useState, useRef } from 'react';
+import type { FC } from 'react';
+import React, { useRef } from 'react';
 
 interface NewEntityInputProps {
   handleSave: (data: { name: string }) => void;

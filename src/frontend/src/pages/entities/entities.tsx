@@ -23,13 +23,16 @@ export const Entities: React.FC = () => {
 
   return (
     <div className="text-normal w-full max-w-5xl py-4 px-8">
-      <h1 className="text-title mb-4">Entities Page</h1>
+      <h1 className="text-title mb-4">Entities</h1>
       <div className="flex flex-col">
         <NewEntityInput handleSave={handleSave} />
         {entities && entities.length !== 0 ? (
-          entities.map((entity) => (
-            <div className="border-b last:border-b-0 border-b-zinc-500 py-4 flex">
-              <span className="flex-1">{entity.data.name}</span>
+          entities.map((entity, index) => (
+            <div
+              key={index}
+              className="border-b last:border-b-0 border-b-zinc-500 py-4 flex"
+            >
+              <span className="flex-1">{entity.name}</span>
               <div>
                 <button onClick={handleDelete(entity.id)}>X</button>
               </div>

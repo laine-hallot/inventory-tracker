@@ -18,7 +18,7 @@ const TopLevelRoutes = [
     path: '/entities',
   },
   {
-    name: 'Items',
+    name: 'Supplies',
     path: '/items',
   },
 ];
