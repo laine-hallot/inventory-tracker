@@ -16,15 +16,40 @@ export const NavContext = createContext<{
   setRouterContextData: (value: React.SetStateAction<RouterContext>) => void;
 }>(null);
 
+const routeVariableRegex = /:.*^/;
+
+const recursiveRouteThingy = (
+  currentTreeBranch: Record<string, any>,
+  currentSegmentIndex: number,
+  pathSegments: string[]
+) => {
+  const currentSegment = pathSegments[currentSegmentIndex];
+  if (currentTreeBranch[currentSegment] === undefined) {
+    currentTreeBranch[currentSegment] = {};
+  }
+  currentTreeBranch[currentSegment] = {
+    ...currentTreeBranch[currentSegment],
+    isRouteVar: routeVariableRegex.test(currentSegment),
+  };
+};
+
 const initializeRoutes = (
   routes: ConfigRoutes
 ): { activeRoute: string; routes: Routes } => {
   let initialRoute: string;
 
+  const routeTree = {};
+
   const initializeRoutes = routes.map((route, index) => {
     if (index === 0 || route.default) {
       initialRoute = route.path;
     }
+
+    const pathSegments = route.path.split('/');
+    pathSegments.forEach((semgent) => {
+      semgent;
+    });
+
     return { active: !!route.default, ...route };
   });
 
@@ -51,7 +76,9 @@ export const useNavigator = () => {
   const { routerContextData, setRouterContextData } = useContext(NavContext);
 
   const updatePage = useCallback(
-    (path) => {
+    (path: string) => {
+      const pathSegments = path.split('/');
+
       setRouterContextData({
         ...routerContextData,
         activeRoute: path,

@@ -17,6 +17,11 @@ export const routes: ConfigRoutes = [
     component: Entities,
   },
   {
+    name: 'Entities',
+    path: '/entities/:id',
+    component: Entities,
+  },
+  {
     name: 'Items',
     path: '/items',
     component: Items,
