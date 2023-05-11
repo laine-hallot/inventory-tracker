@@ -16,21 +16,26 @@ export const NavContext = createContext<{
   setRouterContextData: (value: React.SetStateAction<RouterContext>) => void;
 }>(null);
 
-const routeVariableRegex = /:.*^/;
+const routeVariableRegex = /:.*$/;
 
 const recursiveRouteThingy = (
   currentTreeBranch: Record<string, any>,
-  currentSegmentIndex: number,
-  pathSegments: string[]
+  pathSegments: string[],
+  currentSegmentIndex: number = 0
 ) => {
   const currentSegment = pathSegments[currentSegmentIndex];
   if (currentTreeBranch[currentSegment] === undefined) {
-    currentTreeBranch[currentSegment] = {};
+    currentTreeBranch[currentSegment] = {
+      isRouteVar: routeVariableRegex.test(currentSegment),
+    };
   }
-  currentTreeBranch[currentSegment] = {
-    ...currentTreeBranch[currentSegment],
-    isRouteVar: routeVariableRegex.test(currentSegment),
-  };
+  if (currentSegmentIndex < pathSegments.length - 1) {
+    recursiveRouteThingy(
+      currentTreeBranch[currentSegment],
+      pathSegments,
+      currentSegmentIndex + 1
+    );
+  }
 };
 
 const initializeRoutes = (
@@ -46,12 +51,11 @@ const initializeRoutes = (
     }
 
     const pathSegments = route.path.split('/');
-    pathSegments.forEach((semgent) => {
-      semgent;
-    });
-
+    console.log('pathSegments', pathSegments);
+    recursiveRouteThingy(routeTree, pathSegments);
     return { active: !!route.default, ...route };
   });
+  console.log('routeTree', routeTree);
 
   return {
     activeRoute: initialRoute,
