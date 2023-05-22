@@ -50,7 +50,8 @@ const initializeRoutes = (
       initialRoute = route.path;
     }
 
-    const pathSegments = route.path.split('/');
+    const pathSegments =
+      route.path === '/' ? ['/'] : route.path.replace(/^\/|\/$/, '').split('/');
     console.log('pathSegments', pathSegments);
     recursiveRouteThingy(routeTree, pathSegments);
     return { active: !!route.default, ...route };
