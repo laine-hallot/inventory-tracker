@@ -9,12 +9,13 @@ export const routes: ConfigRoutes = [
     name: 'Dashboard',
     path: '/',
     component: HomeDashboard,
-    default: true,
+    showInSidebar: true,
   },
   {
     name: 'Entities',
     path: '/entities',
     component: Entities,
+    showInSidebar: true,
   },
   {
     name: 'Entities',
@@ -25,5 +26,6 @@ export const routes: ConfigRoutes = [
     name: 'Items',
     path: '/items',
     component: Items,
+    showInSidebar: true,
   },
 ];

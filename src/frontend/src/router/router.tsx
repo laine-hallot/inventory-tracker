@@ -8,7 +8,12 @@ import React, {
   useMemo,
 } from 'react';
 
-import { ConfigRoutes, RouterContext, Routes } from './types';
+import {
+  ConfigRoutes,
+  RouterContext,
+  Routes,
+  ScreenLayoutProps,
+} from './types';
 import { MainUI } from '../ui/main-ui';
 
 export const NavContext = createContext<{
@@ -38,14 +43,12 @@ const recursiveRouteThingy = (
   }
 };
 
-const initializeRoutes = (
-  routes: ConfigRoutes
-): { activeRoute: string; routes: Routes } => {
+const initializeRoutes = (routes: ConfigRoutes): RouterContext => {
   let initialRoute: string;
 
   const routeTree = {};
 
-  const initializeRoutes = routes.map((route, index) => {
+  const initializedRoutes = routes.map((route, index) => {
     if (index === 0 || route.default) {
       initialRoute = route.path;
     }
@@ -58,9 +61,18 @@ const initializeRoutes = (
   });
   console.log('routeTree', routeTree);
 
+  const sideBarRoutes = routes
+    .map((route) =>
+      route.showInSidebar ? { name: route.name, path: route.path } : null
+    )
+    .filter((route) => route !== null);
+
+  console.log({ sideBarRoutes, routes });
+
   return {
     activeRoute: initialRoute,
-    routes: initializeRoutes,
+    routes: initializedRoutes,
+    sideBarRoutes,
   };
 };
 
@@ -98,7 +110,7 @@ export const useNavigator = () => {
 interface RouterProps {
   leftNavOpen?: boolean;
   routes: ConfigRoutes;
-  layout: React.FC<PropsWithChildren>;
+  layout: React.FC<PropsWithChildren<ScreenLayoutProps>>;
 }
 
 export const Router: FC<RouterProps> = ({ layout: Layout, routes }) => {
@@ -113,7 +125,7 @@ export const Router: FC<RouterProps> = ({ layout: Layout, routes }) => {
   return (
     <>
       <NavContext.Provider value={{ routerContextData, setRouterContextData }}>
-        <Layout>
+        <Layout sideBarRoutes={routerContextData.sideBarRoutes}>
           {routerContextData.activeRoute && <ActivePageComponent />}
         </Layout>
       </NavContext.Provider>
